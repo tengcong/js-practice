@@ -5,19 +5,6 @@
   <title></title>
   <script type="text/javascript" src='test.js'></script>
   <link rel="stylesheet" href="test.css" />
-  <style type="text/css">
-    h4{
-      background: pink;
-      width: 800px;
-    }
-    h5{
-      background: rgb(40%, 100%, 80%);
-      width: 800px;
-    }
-    em{
-      background: rgb(80%, 100%, 80%);
-    }
-  </style>
 </head>
 <body>
   <h1>It is about "Arguments" and "This"</h1>
@@ -34,6 +21,13 @@
     <li>As a <em>constructor</em>, in which a new object is brought into being.</li>
     <li>Via <em>their apply() or call() methods</em>, which, well, is kind of complicated, so we’ll take that when we get to it.</li>
   </ul>
+  <h5>THE SUPER-POWERS OF CONSTRUCTORS</h5>
+    <ul>
+      <li>A <em>new empty object</em> is created.</li>
+      <li>This object is passed to the constructor as the <em>this</em> parameter, and thus becomes the
+      constructor’s function context.</li>
+      <li>In the absence of any explicit return value, the <em>new object</em> is returned as the constructor’s value.</li>
+    </ul>
   <ul id='results'>
   </ul>
 </body>
@@ -57,4 +51,31 @@
 
   assert(ninja2.skulk() === ninja2, "The 2st ninja is skulking");
 
+  function Ninja(){
+    this.skulk = function(){ return this; };
+  }
+
+  var n1 = new Ninja();
+  var n2 = new Ninja();
+
+  assert(n1.skulk() === n1, "the 1st n1 is skulking");
+  assert(typeof n1 === "object", "the 1st n1 typeof is object");
+  assert(n2.skulk() === n2, "the 1st n1 is skulking");
+
+  function juggle(){
+    var result = 0;
+    for(var n = 0; n < arguments.length; n++ ){
+      result += arguments[n];
+    }
+    this.result = result;
+  }
+
+  var n3 = {};
+  var n4 = {};
+
+  juggle.apply(n3, [1,2,3,4]);
+  juggle.call(n4, 5, 6, 7, 8);
+
+  assert(n3.result === 10, "juggled via apply");
+  assert(n4.result === 26, "juggled via call");
 </script>
