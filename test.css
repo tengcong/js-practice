@@ -1,0 +1,8 @@
+#results li.pass { color: green; }
+#results li.fail { color: red; }
+
+#results {
+  border: 1px solid rgb(30%, 60%, 80%);
+  width: 500px;
+  background: rgb(75%, 80%, 60%);
+}

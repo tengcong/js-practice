@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  function isNimble(){ return true;}
+  assert(typeof window.isNimble === 'function', "isNimble() defined");
+  assert(isNimble.name === 'isNimble',  "isNimble() has a name");
+
+
+  var canFly = function(){ return true;};
+  assert(typeof window.canFly === 'function', "canFly() defined");
+  assert(canFly.name === '',  "canFly() has no name");
+
+  window.isDeadly = function(){ return true; };
+  assert(typeof window.isDeadly === 'function', "isDeadly() defined");
+  assert(isDeadly.name === '', "isDeadly() has no name");
+
+  alert(aaa);
+
+  function outer(){
+
+    window.aaa =  function(){alert(1);}
+
+    assert(typeof inner === 'function', "inner() in scope before declaration");
+    // inner();
+    console.log(this);
+    function inner(){ alert(123);}
+    assert(typeof inner === 'function', "inner() in scope after declaration");
+    assert(window.inner === undefined, "inner() not in global scope");
+  }
+
+  outer();
+  // assert(inner === undefined, "inner() still not in global scope");
+</script>

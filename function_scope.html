@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+
+  <div style='background: rgb(80%, 40%, 40%)'>
+    Variable declarations are in scope from their point of declaration to the end of the function within which they are declared, regardless of block nesting.<br>
+    Named functions are in scope within the entire function within which they are declared, regardless of block nesting.g.<br>
+    For the purposes of declaration scopes, the global context acts like one big function encompassing the code on the page.g.<br>
+
+    function declarations can be forward referenced within their scope, while variables cannot.
+  </div>
+</body>
+</html>
+
+<script type="text/javascript">
+  if(window){
+    var i = 1;
+  }
+  assert(i == 1, 'we got i = 1');
+
+  function outer(){
+    assert(typeof foo == 'function', "function can be forward referenced!")
+    assert(typeof a == 'number', "but not variable declaration!")
+
+    var a = 1;
+    function foo(){}
+    assert(typeof a == 'number', "success!")
+  }
+  outer();
+</script>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript">
+  (function(){
+    var results;
+    this.assert = function assert(value, desc){
+      var li = document.createElement("li");
+      li.className = value ? "pass" : "fail";
+      li.appendChild(document.createTextNode(desc));
+      document.getElementById('results').appendChild(li);
+
+      if(!value){
+        li.parentNode.parentNode.className = "fail"
+      }
+      return li;
+    };
+
+    this.test = function test(name, fn){
+      results = document.getElementById("results");
+      results = assert(true, name).appendChild(
+        document.createElement("ul"));
+      fn();
+    };
+   })();
+
+    window.onload = function(){
+      test("A test.", function(){
+        assert(true, "first should be success");
+        assert(true, "second should be success");
+        assert(true, "third should be success");
+      });
+
+      test("Another test.", function(){
+        assert(true, "first should be success");
+        assert(false, "second should be fail");
+        assert(true, "third should be success");
+      });
+
+      test("A third test.", function(){
+        assert(null, "fail");
+        assert(5, "it should be success");
+      });
+    }
+
+  </script>
+</head>
+<style type="text/css">
+    #results li.pass { color: green; }
+    #results li.fail { color: red; }
+</style>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
