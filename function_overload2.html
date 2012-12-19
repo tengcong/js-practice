@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  function addMethod(object, name, fn){
+    var old = object[name];
+    object[name] = function(){
+      if(fn.length == arguments.length){
+        alert(1);
+        alert("fn.length = " + fn.length + ", arguments.length = " + arguments.length);
+        return fn.apply(this, arguments);
+      }else if(typeof fn == 'function'){
+        alert(2);
+        alert("fn.length = " + fn.length + ", arguments.length = " + arguments.length);
+        return old.apply(this, arguments);
+      }
+    }
+  }
+
+  ninjas = {
+    values: ["Tom cat", "Yang Walee", "Marshall G"]
+  }
+
+  alert(ninjas.find);
+  addMethod(ninjas, "find", function(){
+    return this.values;
+  });
+  alert(ninjas.find);
+
+  addMethod(ninjas, "find", function(index){
+    return this.values[index];
+  });
+
+  addMethod(ninjas, "find", function(index, i){
+    return this.values[i];
+  });
+
+  // alert(ninjas.find());
+  alert(ninjas.find(0));
+  // alert(ninjas.find(1, 2));
+
+</script>

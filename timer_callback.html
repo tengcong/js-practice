@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+  <style type="text/css">
+    #box{
+      background-color: blue;
+    }
+
+  </style>
+</head>
+<body>
+  <h4>
+    in other words, the closure isn’t simply a snapshot
+    of the state of the scope at the time of creation, but an active encapsulation of that state
+    that can be modified as long as the closure exists
+  </h4>
+  <ul id='results'>
+  </ul>
+
+  <div id='box'>aaaa</div>
+</body>
+</html>
+
+<script type="text/javascript">
+  var elem = document.getElementById('box');
+  var tick = 0;
+
+  var timer = setInterval(function(){
+    if(tick < 100) {
+      elem.style.width = elem.style.height = tick + 'px';
+      tick ++;
+    }else{
+      clearInterval(timer);
+      assert(tick == 100, "tick access within clojure");
+      assert(elem, "elem access within clojure");
+      assert(timer, "timer access within clojure");
+    }
+  }, 10);
+</script>

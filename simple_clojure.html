@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  var outerValue = 'ninja';
+  var later;
+
+  function outerFunction(){
+    var innerValue = 'samurai';
+
+    function innerFunction(paramsValue){
+      assert(outerValue, "I can see ninja");
+      assert(innerValue, "I can see samurai");
+      assert(paramsValue, "I can see wakizashi");
+      assert(tooLate, "I can see ronin");
+    }
+    later = innerFunction;
+  }
+
+  var tooLate = "ronin";
+  outerFunction();
+  later("wakizashi");
+
+  function Ninja(){
+    alert(this == window);
+  }
+
+  Ninja(); // window
+  n = new Ninja(); // n
+
+
+
+</script>

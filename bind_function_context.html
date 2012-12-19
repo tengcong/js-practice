@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+  <h4>
+    <em>addEventListener</em>
+    redefines the context to be the target element of the event, which causes the context to be
+    the 'button' element, not the button object.
+  </h4>
+  <button id='test'>Click Me!</button>
+</body>
+</html>
+<script type="text/javascript">
+  var button = {
+    clicked: false,
+    click: function(){
+      // button.clicked = true;
+      this.clicked = true;
+      assert(button.clicked, 'the button has been clicked');
+      assert(btn.clicked, 'the button has been clicked');
+    }
+  }
+
+  var btn = document.getElementById('test');
+  btn.addEventListener('click', button.click, false);
+
+  // alert(btn.clicked);
+  // setTimeout(function(){ alert(btn.clicked); }, 3000); after clicked the button, this property became true
+  //////////////////
+
+  function bind(context, name){
+    return function(){
+      return context[name].apply(context, arguments);
+    }
+  }
+
+  var button = {
+    clicked: false,
+    click: function(){
+      this.clicked = true;
+      assert(button.clicked, "the button has been clicked");
+      console.log(this);
+    }
+  }
+
+  var btn = document.getElementById('test');
+  btn.addEventListener('click', bind(button, "click"), false);
+
+
+  ///// prototype library impelementation
+
+  Function.prototype.bind = function(){
+    var fn = this, args = Array.prototype.slice.call(arguments), object = args.shift();
+    return function(){
+      return fn.apply(object,
+          args.concat(Array.prototype.slice.call(arguments)));
+    };
+  };
+
+
+  var myObject = {};
+  function myFunction(){
+    console.log(this);
+    console.log(arguments);
+    return this == myObject;
+  }
+
+  assert(!myFunction(), "context not set yet");
+
+  var aFunction = myFunction.bind(myObject, 1,2,3,4);
+  assert(aFunction(5,6), "set already");
+
+
+
+</script>
