@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <h3>in this example, we fooled slice() method to deal with arguments</h3>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+
+<script type="text/javascript">
+  function merge(root){
+    for(var i = 1; i < arguments.length; i++){
+      for(var key in arguments[i]){
+        root[key] = arguments[i][key];
+      }
+    }
+    return root;
+  }
+
+  var merged = merge(
+    {name: "weihai"},
+    {city: "weihaiwei"}
+  );
+
+  assert(merged.name == "weihai", "origin data get");
+  assert(merged.city == "weihaiwei", "merged data get");
+
+
+  //use slice method
+  // this will cause exception
+  // function multiMax(multi){
+  //   return multi * Math.max.apply(Math, arguments.slice(1));
+  // }
+
+  // assert(multiMax(3, 1, 5, 3);
+
+  function multiMax(multi){
+    var others = Array.prototype.slice.call(arguments, 1);
+    return multi * Math.max.apply(Math, others);
+  }
+  assert(multiMax(3, 1, 5, 3) == 15, "fake array#slice() works ! ");
+
+  // function's length property
+  function makeNinja(name){}
+  function makeSamurai(name, rank){}
+  assert(makeNinja.length == 1, "Only expecting a single argument");
+  assert(makeSamurai.length == 2, "expecting 2 arguments");
+
+
+
+</script>
