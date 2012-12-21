@@ -27,12 +27,15 @@
   assert(i == 1, 'we got i = 1');
 
   function outer(){
-    assert(typeof foo == 'function', "function can be forward referenced!")
-    assert(typeof a == 'number', "but not variable declaration!")
+    assert(typeof foo == 'function', "function can be forward referenced!");
+    assert(typeof a == 'number', "but not variable declaration!");
+    assert(typeof bar == 'undefined', "not named function can not be forward referenced");
+    console.log(bar);
 
     var a = 1;
     function foo(){}
     assert(typeof a == 'number', "success!")
+    var bar = function(){}
   }
   outer();
 </script>

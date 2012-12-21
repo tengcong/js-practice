@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+(function(){
+  var a = 1;
+  var jQuery = window.jQuery = function(){
+
+  }
+  assert(jQuery, 'can see jQuery');
+})();
+/// another one
+var jQuery = (function(){
+  function jQuery(){
+
+  }
+  return jQuery();
+})();
+</script>
