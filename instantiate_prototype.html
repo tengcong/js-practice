@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <h4>demonstrate precedence of initializer:</h4>
+  <h5>
+    1. Properties are bound to the object instance from the <em>prototype</em>.<br>
+    2. Properties are bound to the object instance within the <em>constructor function</em>.<br>
+  </h5>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  function Ninja(){
+    assert(this.swingSword, 'can I access');
+
+    this.swung = false;
+    this.swingSword = function(){
+      return !this.swung;
+    };
+  }
+  Ninja.prototype.swingSword = function(){
+    return this.swung;
+  }
+  var ninja1 = Ninja();
+  assert(ninja1 === undefined, "No instance of Ninja created.");
+
+  var ninja2 = new Ninja();
+  assert(ninja2 && ninja2.swingSword(), "Instance exists and method is callable, but not the prototype method.");
+
+</script>

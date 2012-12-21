@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <h5>
+    The best technique capable of creating such a prototype chain is by using an instance of an object as the other object’s prototype as in:<br>
+    <em>SubClass.prototype = new SuperClass();</em><br>
+    This will preserve the prototype chain as the prototype of the SubClass instance will be an instance of the SuperClass,<br>
+    which has a prototype with all the properties of SuperClass, and which will in turn have a prototype pointing to an instance of its superclass, and on and on.<br>
+    Make sure not to use the <em>Ninja.prototype = Person.prototype;</em>technique. <br>
+    When doing this, any changes to the Ninja prototype will also change the Person prototype (since they're the same object) – which is bound to have undesirable side effects.
+  </h5>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  function Person(){}
+  Person.prototype.dance = function(){alert('person dance');};
+
+  function Ninja(){}
+  Ninja.prototype = {dance: Person.prototype.dance};
+
+  for(key in Person.prototype){
+  }
+  console.log(Person.prototype);
+  console.log({}.constructor);
+
+  var ninja = new Ninja();
+  assert(ninja instanceof Ninja, 'ninja receives functionalitiy from Ninja prototype');
+  assert(ninja instanceof Person, 'ninja receives functionalitiy from Person prototype');
+  assert(ninja.dance, 'but ninja can dance');
+  assert(ninja instanceof Object, 'ninja receives functionalitiy from Object prototype');
+
+  // best practice
+  Ninja.prototype = new Person();
+  var nin = new Ninja();
+  assert(nin instanceof Person, 'nin is Person');
+  assert(nin instanceof Ninja, 'nin is Ninja');
+  assert(typeof nin.dance == 'function', 'nin can dance');
+
+</script>
