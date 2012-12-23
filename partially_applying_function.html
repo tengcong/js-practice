@@ -45,7 +45,6 @@
   // alert(results.length);
 
   Function.prototype.partial = function(){
-    // console.log(this);
     var fn = this,
       args = Array.prototype.slice.call(arguments);
     return function(){
@@ -62,7 +61,7 @@
   var delay = window.setTimeout.partial(undefined, 1000);
 
   delay(function(){
-      assert(true, "I love walee");
+    assert(true, "I <3 walee");
   });
 
 
@@ -70,15 +69,10 @@
   // var bindClick = document.body.addEventListener.partial("click", undefined, false);
   var bindClick = document.getElementById('results').addEventListener.partial("click", undefined, false);
 
-  // bindClick.call(document.getElementById('results'),
-  //   function(){
-  //     assert(true, 'success');
-  // });
+  bindClick.call(document.getElementById('results'),
+    function(){
+      assert(true, 'success');
+  });
 
-  function bind(context, name){
-    return function(){
-      return context[name].apply(context, arguments);
-    }
-  }
 
 </script>
