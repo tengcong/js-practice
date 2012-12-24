@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  var ninja = {
+    chirp: function(n){
+      return n > 1 ? arguments.callee(n - 1) + "-chirp" : "chirp"
+    }
+  };
+  assert(ninja.chirp(3) == "chirp-chirp-chirp", "success");
+
+  var obj = {}
+  var foo = function(){}
+  obj.a = 1;
+  foo.b = 1;
+
+  ///////storing functions
+  var store = {
+    nextId: 1,
+    cache: {},
+    add: function(fn){
+      if(!fn.id){
+        fn.id = this.nextId ++;
+        return !!(store.cache[fn.id] = fn);
+      }
+    }
+  };
+
+  function test(){}
+
+  assert(!!store.add(test), "function was safely added");
+  assert(!store.add(test), "function has been added");
+
+  /////self-memoizing functions
+
+  function isPrime(value){
+    if(!isPrime.anwers) isPrime.anwers = {};
+    if(isPrime.anwers[value] != null) {
+      return isPrime.anwers[value];
+    }
+    var prime = value != 1
+  };
+
+</script>

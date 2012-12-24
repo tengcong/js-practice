@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+var ninja = {
+  name: "1ninja",
+  test_alert: function(n){
+    alert(this.name);
+    alert(n);
+  }
+}
+
+Function.prototype.bind = function(){
+  var fn = this, args = Array.prototype.slice.call(arguments), object = args.shift();
+  return function(){
+    return fn.apply(object,
+        args.concat(Array.prototype.slice.call(arguments)));
+  }
+}
+
+function wrap(object, method, wrapper){
+  var origin_fn = object[method];
+  object[method] = function(){
+    // wrapper.apply(object, [origin_fn.bind(this)].concat(
+       // Array.prototype.slice.call(arguments)));
+    // wrapper.apply(object, [origin_fn, object, 'ninja']);
+    wrapper.apply(this, [origin_fn.bind(this)].concat(
+      Array.prototype.slice.call(arguments)
+          ));
+  }
+}
+
+// usage
+wrap(ninja, "test_alert", function(original, n){
+  if(this.name == 'ninja'){
+    alert('you cool');
+    // original.apply(ninja, 1);
+    // original.apply(ninja, [1]);
+    original(1); // both okay
+  }
+});
+
+ninja.test_alert(ninja, 1);
+</script>

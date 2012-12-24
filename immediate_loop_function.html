@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <div>div0</div>
+  <div>div1</div>
+  <ul id='results'>
+  </ul>
+  <h4>closures remember <em>references</em> to included variables – not just their actual values at the time at which they are created. </h4>
+</body>
+</html>
+<script type="text/javascript">
+  var divs = document.getElementsByTagName('div');
+
+
+  // for(var i = 0; i < divs.length; i++){
+  //   divs[i].addEventListener('click', function(){
+  //     alert('clicked div ' + i);
+  //   }, false);
+  // } // this is no correct
+
+  for(var i = 0; i < divs.length; i++){
+    (function(i){
+      divs[i].addEventListener('click', function(){
+        alert('clicked div ' + i);
+      }, false);
+    })(i);
+  }
+
+</script>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  //////
+  var foo = {
+    name: 'foo',
+    test: function(){
+      alert('foo test ' + this.name);
+    }
+  };
+  var bar = {
+    name: 'bar'
+  };
+  foo.test.call(bar);
+  y = foo.test;
+  y.call(window);
+
+  var r = document.getElementById();
+  ///////
+
+
+  // alert(("aa, bb, cc").split(/,\s*/).length);
+
+  Function.prototype.curry = function(){
+    var fn = this, args = Array.prototype.slice.call(arguments);
+    return function(){
+      return fn.apply(this,args);
+    }
+  }
+
+  String.prototype.csv = String.prototype.split.curry(/,\s*/);
+  // console.log('1'.csv);
+  var results = "aa, bb, cc".csv();
+  // alert(results.length);
+
+  Function.prototype.partial = function(){
+    var fn = this,
+      args = Array.prototype.slice.call(arguments);
+    return function(){
+      var arg = 0;
+      for(var i = 0; i < args.length && arg <= arguments.length; i++){
+        if(args[i] === undefined){
+          args[i] = arguments[arg++];
+        }
+      }
+      return fn.apply(this, args);
+    }
+  }
+
+  var delay = window.setTimeout.partial(undefined, 1000);
+
+  delay(function(){
+    assert(true, "I <3 walee");
+  });
+
+
+  // var bindClick = addEventListener.partial("click", undefined, false);
+  // var bindClick = document.body.addEventListener.partial("click", undefined, false);
+  var bindClick = document.getElementById('results').addEventListener.partial("click", undefined, false);
+
+  bindClick.call(document.getElementById('results'),
+    function(){
+      assert(true, 'success');
+  });
+
+
+</script>

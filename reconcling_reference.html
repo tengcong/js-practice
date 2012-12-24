@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <h4>overview of the process: </h4>
+  <h5>
+    1. When a property reference to an object is made, first the object itself is checked to see <em>if the property exists</em>. If it does, the value is taken. If not...<br>
+    2. The <em>prototype associated</em> with the object is located and it is checked for the property. If it exists, the value is take. If not...<br>
+    3. The value is <em>undefined</em>.<br>
+  </h5>
+    <p>
+    <h5>
+      even when the prototyped method is added after the instance method has been added, that the <em>instance method takes precedence</em>.<br>
+      This makes perfect sense. The <em>prototype is only consulted when a property reference on the object itself fails</em>.<br>
+      As the object possesses a swingSword property, the prototyped version doesn’t come into play, even though it was added to the prototype after object construction.
+    </h5>
+
+    <h5>
+      NOTE While the <em>constructor property of an object can be changed</em>,<br>
+      doing so doesn't have any immediate or obvious purpose as its reason for being is to inform as to where the object was constructed from.<br>
+     <em>The original value will simply be overwritten and lost</em>.<br>
+    </h5>
+    </p>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  function Ninja(){
+    this.swung = true;
+    this.swingSword = function(){
+      return false;
+    }
+  }
+
+  var ninja = new Ninja();
+
+  Ninja.prototype.swingSword = function(){
+    return this.swung;
+  };
+
+  var bind = function(object, method){
+    return function(){
+      return method.apply(object);
+    };
+  }
+
+  assert(ninja.swingSword() === false, 'called the instance method , not the prototype method.');
+  assert(bind(ninja, ninja.constructor.prototype.swingSword)() === true, 'but we can bind the prototype method to the object');
+  assert(ninja.constructor === Ninja, 'ninja.constructor === Ninja');
+  ///// type of instance and its constructor
+
+  assert(typeof ninja === 'object', 'the type of the instance is object.');
+  assert(ninja instanceof Ninja, 'instance of idnetifies the constructor');
+  assert(ninja.constructor === Ninja, 'the ninja object was created by Ninja function');
+
+  var ninja2 = new ninja.constructor();
+  assert(ninja2 instanceof Ninja, "It's a Ninja!");
+
+  function Ninja2(){}
+  ninja2.constructor = Ninja2;
+</script>

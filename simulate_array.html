@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  function Test(){
+    this.length = 0;
+    this.length2 = 0;
+    this.add = function(){
+      this.length += 1;
+      this.length2 += 1;
+    }
+  }
+
+  var t = new Test();
+  t.add();
+
+  var elems = {
+    length: 0,
+    add: function(){
+      t.add.call(this);
+    }
+  }
+
+  elems.add();
+  elems.add();
+  elems.add();
+  alert(elems.length);
+</script>
