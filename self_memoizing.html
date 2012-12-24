@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <h1>It is about "Arguments" and "This"</h1>
+  <h4>If more arguments are supplied than there are parameters, the “excess” arguments are simply not assigned to parameter names.<br>
+    We’ll see in just a bit that even though the arguments aren’t assigned to parameter names, we still have a way to get at them.</h4>
+  <h4>If there are more parameters than there are arguments, the parameters that have no corresponding argument are set to undefined.</h4>
+  <h4>And, very interestingly, all function invocations are also passed two implicit parameters: arguments and this.</h4>
+  <h4>And as it turns out, what the this parameter points to is not, as in Java, defined by how the function is declared, but by how it is invoked!</h4>
+
+  <h5>There are actually four different ways to invoke a function, each with their own nuances. They are:</h5>
+  <ul>
+    <li>As a <em>function</em>, in which the function is invoked in a straightforward manner.</li>
+    <li>As a <em>method</em>, which ties the invocation to an object, enabling object-oriented programming.</li>
+    <li>As a <em>constructor</em>, in which a new object is brought into being.</li>
+    <li>Via <em>their apply() or call() methods</em>, which, well, is kind of complicated, so we’ll take that when we get to it.</li>
+  </ul>
+  <h5>THE SUPER-POWERS OF CONSTRUCTORS</h5>
+    <ul>
+      <li>A <em>new empty object</em> is created.</li>
+      <li>This object is passed to the constructor as the <em>this</em> parameter, and thus becomes the
+      constructor’s function context.</li>
+      <li>In the absence of any explicit return value, the <em>new object</em> is returned as the constructor’s value.</li>
+    </ul>
+  <ul id='results'>
+  </ul>
+</body>
+</html>
+<script type="text/javascript">
+  function creep(){ return this; }
+  assert(creep() === window, "creeping in the window");
+
+  var sneak = creep;
+  assert(sneak() === window, "sneaking in the window");
+
+  var ninja1 = {
+    skulk: creep
+  };
+
+  assert(ninja1.skulk() === ninja1, "The 1st ninja is skulking");
+
+  var ninja2 = {
+    skulk: creep
+  };
+
+  assert(ninja2.skulk() === ninja2, "The 2st ninja is skulking");
+
+  function Ninja(){
+    this.skulk = function(){ return this; };
+  }
+
+  var n1 = new Ninja();
+  var n2 = new Ninja();
+
+  assert(n1.skulk() === n1, "the 1st n1 is skulking");
+  assert(typeof n1 === "object", "the 1st n1 typeof is object");
+  assert(n2.skulk() === n2, "the 1st n1 is skulking");
+
+  function juggle(){
+    var result = 0;
+    for(var n = 0; n < arguments.length; n++ ){
+      result += arguments[n];
+    }
+    this.result = result;
+  }
+
+  var n3 = {};
+  var n4 = {};
+
+  juggle.apply(n3, [1,2,3,4]);
+  juggle.call(n4, 5, 6, 7, 8);
+
+  assert(n3.result === 10, "juggled via apply");
+  assert(n4.result === 26, "juggled via call");
+</script>
