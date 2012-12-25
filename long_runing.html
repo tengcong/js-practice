@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+  <table>
+    <tbody></tbody>
+  </table>
+</body>
+</html>
+
+<script type="text/javascript">
+  var table = document.getElementsByTagName('tbody')[0];
+  for(var i = 0; i < 20000; i++){
+    var tr = document.createElement('tr');
+    for(var t = 0; t < 6; t++){
+      var td = document.createElement('td');
+      td.appendChild(document.createTextNode("" + t));
+      tr.appendChild(td);
+    }
+    table.appendChild(tr);
+  }
+  setTimeout(function(){
+    alert(1);
+  }, 1000);
+</script>
