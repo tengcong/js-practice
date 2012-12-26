@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+  <style type="text/css">
+    #x{
+      background-color: rgb(10%, 80%, 80%);
+      position: relative;
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+  <div id='x'>hello</div>
+</body>
+</html>
+<script type="text/javascript">
+  var timers = {
+    timerID: 0,
+    timers: [],
+
+    add:function(fn){
+      this.timers.push(fn);
+    },
+
+    start:function(){
+      if(this.timerID) return;
+      (function(){
+        if(timers.timers.length > 0){
+          for(var i = 0; i < timers.timers.length; i++){
+            if(timers.timers[i]() === false){
+              timers.timers.splice(i, 1);
+              i --;
+            }
+          }
+          timers.timerID = setTimeout(arguments.callee, 0);
+        }
+      })();
+    },
+
+    stop:function(){
+      clearTimeout(timerID);
+      this.timerID = 0;
+    }
+  }
+
+  var box = document.getElementById('x');
+  var x = 0, y = 20;
+  timers.add(function(){
+    box.style.left = x + 'px';
+    // if(x > 30){
+    //   timers.add(function(){
+    //     box.style.left = x + 'px';
+    //     if(--x < 30) return false;
+    //   });
+    // }
+    if(++x > 80) return false;
+  });
+  timers.add(function(){
+    box.style.top = y + 'px';
+    if(++y > 200) return false;
+  });
+  timers.start();
+</script>
