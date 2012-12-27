@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src='test.js'></script>
+    <link rel="stylesheet" href="test.css" />
+  </head>
+  <body>
+    <ul id='results'>
+    </ul>
+    <div id='opacity' style='opacity:0.5; filter:alpha(opacity=50);'></div>
+  </body>
+</html>
+<script type="text/javascript">
+  var getOpacity = function(elem){
+    // var filter = elem.style.filter;
+    var filter = "alpha(opacity=50)";
+    var count = filter.match(/opacity=(\d+)/)[1]
+    return filter ?
+      (filter.indexOf('opacity') >= 0) ?
+        (parseFloat(count) / 100) + "" : "":
+      elem.style.opacity;
+  }
+
+  assert(getOpacity(document.getElementById('opacity')) === "0.5", 'the opacity of hte element has been obtained.');
+
+  var html = "<div class='test'><b>Hello</b> <i>world!</i></div>"
+
+  var results = html.match(/<(\/?)(\w+)([^>]*?)>/);  //local search
+
+  // console.log(results); // ["<div class='test'>", "", "div", " test='test'"]
+
+  var all = html.match(/<(\/?)(\w+)([^>]*?)>/g);
+  // console.log(all); //["<div class='test'>", "<b>", "</b>", "<i>", "</i>", "</div>"]
+
+  /////regain capture by exec()
+  var tag = /<(\/?)(\w+)([^>]*?)>/g;
+  var match;
+
+  // while((match = tag.exec(html)) !== null){
+  //   console.log(match);
+  // }
+  // console.log(tag.exec(html));
+  // console.log(tag.exec(html));
+  // console.log(tag.exec(html));
+  // console.log(tag.exec(html));
+  // console.log(tag.exec(html));
+  // console.log(tag.exec(html));
+
+  html = "<b class='hello'>Hello</b> <i>world</i>";
+
+  var pattern = /<(\w+)([^>]*)>(.*?)<\/\1>/g;
+
+  console.log(pattern.exec(html));
+  console.log(pattern.exec(html));
+</script>
