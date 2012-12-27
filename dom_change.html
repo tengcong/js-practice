@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+  <img src="../image/aaa.jpg" alt="" />
+  <div></div>
+</body>
+</html>
+<script type="text/javascript">
+  var image = document.getElementsByTagName('img')[0];
+  image.src = '../image/bbb.jpg';
+  console.log(image.src);
+  console.log(image.getAttribute('src'));
+
+  window.onload = function(){
+
+    var div = document.getElementsByTagName('div')[0];
+    div.setAttribute('id', 'ninja-1');
+    assert(div.getAttribute('id') === 'ninja-1', 'attribute changed');
+    div.id = '2';
+    assert(div.id === '2', 'attribute changed');
+  }
+
+</script>

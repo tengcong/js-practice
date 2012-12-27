@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript" src='test.js'></script>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <ul id='results'>
+  </ul>
+  <textarea id="script" name="" rows="30" cols="130"></textarea><br>
+  <button id='run' style='width: 350px; height: 50px'>run</button>
+</body>
+</html>
+<script type="text/javascript">
+  var btn = document.getElementById('run');
+  var area = document.getElementById('script');
+  btn.addEventListener('click', function(){
+    return function(){
+      var snippet = area.value;
+      eval(snippet);
+    }
+  }(), false);
+</script>
+
+<script type="text/javascript">
+console.log(btn);
+</script>
